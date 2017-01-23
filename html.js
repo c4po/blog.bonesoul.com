@@ -25,6 +25,7 @@ module.exports = React.createClass({
         <head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="google-site-verification" content="826U74MxFOU4a_MEXLn5aJkuMXIKPOXDkVnla4EIRK8" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0 maximum-scale=5.0"
