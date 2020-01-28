@@ -25,7 +25,7 @@ vault kv put secret/my-secret name="Max Cai" email=zhiyuan.cai@gmail.com
 
 3. Authorize Kubernetes to access Vault
 
-Vault supports multiple [auth methods](https://www.vaultproject.io/docs/auth/index.html) including GitHub, LDAP, JWT/OIDC. Here we will use [kubernetes auth method](https://www.vaultproject.io/docs/auth/kubernetes/) as all clients will be run inside the kubernetes cluster.
+Vault supports multiple [auth methods][10] including GitHub, LDAP, JWT/OIDC. Here we will use [kubernetes auth method][11] as all clients will be run inside the kubernetes cluster.
 
 To make things simple, I'm using Terraform Vault provider and Kubernetes provider to create the policy and service account in Vault and Kubernetes.
 
@@ -135,7 +135,7 @@ Then we need use the token of the service account to authorize with Vault, there
 
   * the hard way
 
-  in this [blog][7], it descible a method to get the JWT token from `/var/run/secrets/kubernetes.io/serviceaccount/token` and login to Vault to get the vault token.
+  in this [talk][12] and this [blog][7], they descible a method to get the JWT token from `/var/run/secrets/kubernetes.io/serviceaccount/token` and login to Vault to get the vault token to retrieve the secrets from Vault.
 
   * the easy way
 
@@ -184,12 +184,11 @@ The last step is to run an init container before the application start to retrie
 
 One solution is to add a shell script in the docker image to `export` the value to environment variable and start the application.
 
-Another solution is to create a new secrets object in Kubernetes to hold the secrets from Vault and add them to environment with `envFrom.secretRef`. I wrote a small tool with [client-go][2] to [access the API within a pod][4] covert the text file get from Vault agent to a secrets object in Kubernetes [https://github.com/c4po/ftks](https://github.com/c4po/ftks).
+Another solution is to create a new secrets object in Kubernetes to hold the secrets from Vault and add them to environment with `envFrom.secretRef`. I wrote a small tool with [client-go][2] to [access the API within a pod][4] covert the text file get from Vault agent to a secrets object in Kubernetes. Source code can be found [here][8].
 
 6. put all togetger
 
-The full code for this solution can be found at
-[https://github.com/c4po/kubernetes-vault](https://github.com/c4po/kubernetes-vault)
+The full code for this solution can be found at [here][https://github.com/c4po/kubernetes-vault].
 
 7. reference:
 
@@ -200,3 +199,8 @@ The full code for this solution can be found at
 [5]: https://github.com/hashicorp/vault-helm
 [6]: https://github.com/hashicorp/consul-helm
 [7]: https://medium.com/@jackalus/vault-kubernetes-auth-and-database-secrets-engine-6551d686a12
+[8]: https://github.com/c4po/ftks
+[9]: https://github.com/c4po/kubernetes-vault
+[10]: https://www.vaultproject.io/docs/auth/index.html
+[11]: https://www.vaultproject.io/docs/auth/kubernetes/
+[12]: https://youtu.be/6P26wg2rWgo
