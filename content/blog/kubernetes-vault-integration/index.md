@@ -63,7 +63,7 @@ To make things simple, I'm using Terraform Vault provider and Kubernetes provide
     }
 ```
 
-  * use Vault in Terraform, make sure you have `VAULT_ADDR` and `VAULT_TOKEN` in your environment variable.
+  * Use Vault in Terraform, make sure you have `VAULT_ADDR` and `VAULT_TOKEN` in your environment variable.
 
 ```
     provider "vault" {
@@ -89,7 +89,7 @@ To make things simple, I'm using Terraform Vault provider and Kubernetes provide
     }
 ```
 
-  * get token of Kubernetes service account and config vault auth backend
+  * Get token of Kubernetes service account and config vault auth backend
 
 ```
     data "kubernetes_secret" "vault_auth" {
@@ -135,7 +135,7 @@ Then we need use the token of the service account to authorize with Vault, there
 
   * the hard way
 
-  in this [talk][12] and this [blog][7], they descible a method to get the JWT token from `/var/run/secrets/kubernetes.io/serviceaccount/token` and login to Vault to get the vault token to retrieve the secrets from Vault.
+  In this [talk][12] and this [blog][7], they descible a method to get the JWT token from `/var/run/secrets/kubernetes.io/serviceaccount/token` and login to Vault to get the vault token to retrieve the secrets from Vault.
 
   * the easy way
 
@@ -188,7 +188,7 @@ Another solution is to create a new secrets object in Kubernetes to hold the sec
 
 6. put all togetger
 
-The full code for this solution can be found at [here][https://github.com/c4po/kubernetes-vault].
+The full code for this solution can be found at [here][9].
 
 7. reference:
 
