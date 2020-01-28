@@ -31,14 +31,14 @@ Vault supports multiple [auth methods](https://www.vaultproject.io/docs/auth/ind
 
 To make things simple, I'm using Terraform Vault provider and Kubernetes provider to create the policy and service account in Vault and Kubernetes.
 
-  *  use Kubernetes in Terraform
+    *  use Kubernetes in Terraform
 ```
     provider "kubernetes" {
       config_context = "vault-test.kubernetes"
     }
 ```
   
-  * create service account and role binding
+    * create service account and role binding
 ```
     resource "kubernetes_service_account" "vault_auth" {
         metadata {
@@ -65,14 +65,14 @@ To make things simple, I'm using Terraform Vault provider and Kubernetes provide
     }
 ```
 
-use Vault in Terraform, make sure you have `VAULT_ADDR` and `VAULT_TOKEN` in your environment variable.
+    * use Vault in Terraform, make sure you have `VAULT_ADDR` and `VAULT_TOKEN` in your environment variable.
 
 ```
     provider "vault" {
     }
 ```
 
-Create policy for Kubernetes to read secrets
+    * Create policy for Kubernetes to read secrets
 
 
 ``` 
@@ -91,7 +91,7 @@ Create policy for Kubernetes to read secrets
     }
 ```
 
-get token of Kubernetes service account and config vault auth backend
+    * get token of Kubernetes service account and config vault auth backend
 
 ```
     data "kubernetes_secret" "vault_auth" {
@@ -136,9 +136,11 @@ To get secrets from Vault, we need use authorize with Vault from Kubernetes. Fir
 Then we need use the token of the service account to authorize with Vault, there are 2 ways to do this.
 
     * the hard way
+
     in this [blog][7], it descible a method to get the JWT token from `/var/run/secrets/kubernetes.io/serviceaccount/token` and login to Vault to get the vault token.
 
     * the easy way
+
     [Vault Agent][1] can manage the authrization with Vault for Kubernetes with a simple configuation file. Also we can use Vault Agent template to render the secrets from Vault into a text file for application to read.
 
 
