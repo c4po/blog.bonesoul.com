@@ -1,4 +1,3 @@
-
 ---
 title: Get secrets from Vault into Kubernetes pods
 date: "2020-01-27T14:20:00Z"
@@ -20,6 +19,7 @@ We would like to use Vault to manage the application secrets like API token, DB 
   * After start the Vault on kubernetes, you need run `vault operator init` to initialize the vault and `vault operator unseal` to unseal the vault instance.
 
   * Then we can enable the Vault KV secret engine at `/secret` path and create some secrets.
+
 
 ```
 vault secrets enable -version=2 -path=secret kv
@@ -67,12 +67,14 @@ resource "kubernetes_cluster_role_binding" "vault_auth" {
 ```
 
   * use Vault in Terraform, make sure you have `VAULT_ADDR` and `VAULT_TOKEN` in your environment variable.
+
 ```
 provider "vault" {
 }
 ```
 
   * Create policy for Kubernetes to read secrets
+
 ``` 
 # Read all secret
 # filename: data/secret-all-read.policy
@@ -81,6 +83,7 @@ path "secret/*"
   capabilities = ["read", "list"]
 }
 ```
+
 ```
 resource "vault_policy" "secret-all-read" {
   name   = "secret-all-read"
@@ -89,6 +92,7 @@ resource "vault_policy" "secret-all-read" {
 ```
 
   * get token of Kubernetes service account and config vault auth backend
+
 ```
 data "kubernetes_secret" "vault_auth" {
   metadata {
@@ -137,6 +141,7 @@ metadata:
     * the easy way
     [Vault Agent][1] can manage the authrization with Vault for Kubernetes with a simple configuation file. Also we can use Vault Agent template to render the secrets from Vault into a text file for application to read.
 
+
 ```
 auto_auth {
   method "kubernetes" {
@@ -165,6 +170,7 @@ vault {
 }
 
 ```
+
 ```
 # vault.ctmpl
 {{ with secret "secret/stg/demo" }}{{ range $k, $v := .Data.data }}
